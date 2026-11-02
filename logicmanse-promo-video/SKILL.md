@@ -1,6 +1,6 @@
 ---
 name: logicmanse-promo-video
-description: Use when building a LogicManse Publications promo/marketing video (any title, long-form or Shorts) from a blueprint or concept.
+description: Use when building and publishing a LogicManse Publications promo/marketing video (any title, long-form or Shorts) end to end: cue sheet, HyperFrames render, ElevenLabs voiceover, thumbnail, Drive link, Metricool post to all networks.
 ---
 # LogicManse Promo Video Production
 
@@ -29,3 +29,28 @@ vidIQ's shared "blueprint" pages (vidiq.com/blueprint/...) are read-only snapsho
 
 ## 8. Keep repos and local-only projects separate
 If the active project has its own git repo (e.g. `ftf-video-engine` for the FTF recipe-book videos), commit and push cue sheets/scripts there per that project's own CLAUDE.md conventions. Titles without a repo (e.g. the Leia coloring book) are OneDrive-local-only — don't mix the two: never push a different title's output into an unrelated project's repo, and don't assume every LogicManse title has or needs a repo.
+
+## 9. End-to-end pipeline (proven on the Leia Coloring Book Short, Nov 2026)
+Run these in order; each step is idempotent (skip if its output already exists).
+1. **Assets + cue sheet** (sections 1-5). Keep the VO script short: a ~25-30s Short needs about 60-70 words.
+2. **Build in HyperFrames** (`hyperframes` skill): project at `<Title>\Output\hf-shorts\`, 1080x1920, GSAP paused timeline registered as `window.__timelines["main"]`. Hook = real photo of the subject first, then the art. Music bed at volume 0.15 under the voiceover.
+3. **Voiceover from ElevenLabs** (not local Kokoro; Ani rejected that voice as dull). Tools: `creative_list_voices` then `creative_generate_speech`, model `eleven_v4`. Default voice: **Liz, voice_id `1Hdh5sdoicm1xyz0gQhD`** (young, cheerful, social-media). Backup: Mira `rdEyNni8e60Jlx1RsV9N`. Write the script with punctuation and a leading `[cheerful]` tag. Costs about 350 credits per take, so generate one take per voice. Fetch the mp3 with `creative_get_generations` (signed URL, expires), convert to wav with ffmpeg, then run `npx hyperframes transcribe` for word times and **retime scenes to the words** (ElevenLabs reads faster than Kokoro; the Leia VO was 25s vs 31s).
+4. **Render**: `npx hyperframes check` (density/sub-composition warnings are cosmetic), then `npx hyperframes render -o <name>.mp4`.
+5. **Timestamp every deliverable** (section 10) and save to `<Title>\Output\`.
+6. **Thumbnail** (section 4) with the real photo inset. Save a stamped copy.
+7. **Compress for social**: `scripts/compress_social.sh` (target under 10 MB; Chrome upload limit is 10 MB and `SendUserFile` rejects ~30 MB).
+8. **Drive link (the one manual step)**: Ani drags the compressed MP4 *and the thumbnail* into Drive (aniphilip@gmail.com), sets "Anyone with the link", and pastes both links. Verify with the Drive connector `get_file_permissions` (expects `type: anyone`). Chrome automation of the Drive upload froze repeatedly; do not retry it. Ask for both links up front, since a thumbnail can't be added after publishing.
+9. **Publish via Metricool** (section 11).
+10. **Report**: send the public URLs of each network post, and the stamped file paths.
+
+## 10. Timestamped files
+Every deliverable (final video, social copy, thumbnail, voiceover, cue sheets) gets a local-time stamp: `<name>_YYYY-MM-DD_HHMM.<ext>`. Use `scripts/stamp.py FILE...` (copies; originals stay, so existing Drive/Metricool links keep working). Never overwrite an earlier stamped file; a re-render gets a new stamp.
+
+## 11. Metricool posting rules (brand `Logicmanse Publications`, blogId 7582300, timezone America/New_York)
+- Call `getBrandSettings` first for blogId and timezone. Networks: facebook, instagram, tiktok, youtube. Skip Pinterest unless an image and board are supplied.
+- `media` = the public Drive link (Metricool imports it). `videoThumbnailUrl` = the thumbnail's Drive link (Instagram/Facebook/YouTube; TikTok only on Business accounts).
+- `facebookData.type = REEL`, `instagramData.type = REEL`, `youtubeData` = `{type: "short", title (<100 chars), madeForKids: true, privacy: "public"}`, `tiktokData.privacyOption = PUBLIC_TO_EVERYONE`.
+- **Always set the AI-content flags to true** (Ani's standing rule; his VO and art are AI): `instagramData.isAiGenerated`, `youtubeData.isAiGeneratedContent`, `tiktokData.isAigc`. They can't be edited after publishing.
+- "Post now": Metricool rejects past times, so schedule 5-8 minutes ahead of the current America/New_York time (note: DST ended Nov 1, offset is -05:00). Confirm with `getScheduledPosts` that each network reads `PUBLISHED` and report the `publicUrl`s.
+- Post text: hook line, what's inside, buy link, the A/B poll, hashtags. Do not claim anything the book doesn't contain.
+- Don't automate Instagram/TikTok cover edits afterward: not possible from the web or Metricool once published.

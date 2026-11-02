@@ -35,4 +35,4 @@ Video: HyperFrames (build and render videos as HTML compositions)
 - `media-use` — resolve BGM, SFX, images, icons, logos, voice, color grades or LUTs into local files with a ledger.
 
 Video: LogicManse Publications
-- `logicmanse-promo-video` — build a LogicManse Publications title's promo video (long-form + Shorts cue sheets, real-asset thumbnails, roadmap-grounded CTA) from a blueprint or concept.
+- `logicmanse-promo-video` — build and publish a LogicManse Publications title's promo video end to end: cue sheets, HyperFrames render, ElevenLabs voiceover, timestamped files, thumbnail, Drive link, Metricool post to all networks with AI-content flags.
