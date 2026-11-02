@@ -49,8 +49,36 @@ Every deliverable (final video, social copy, thumbnail, voiceover, cue sheets) g
 ## 11. Metricool posting rules (brand `Logicmanse Publications`, blogId 7582300, timezone America/New_York)
 - Call `getBrandSettings` first for blogId and timezone. Networks: facebook, instagram, tiktok, youtube. Skip Pinterest unless an image and board are supplied.
 - `media` = the public Drive link (Metricool imports it). `videoThumbnailUrl` = the thumbnail's Drive link (Instagram/Facebook/YouTube; TikTok only on Business accounts).
-- `facebookData.type = REEL`, `instagramData.type = REEL`, `youtubeData` = `{type: "short", title (<100 chars), madeForKids: true, privacy: "public"}`, `tiktokData.privacyOption = PUBLIC_TO_EVERYONE`.
+- `facebookData.type = REEL`, `instagramData.type = REEL`, `youtubeData` = `{type: "short", title (<100 chars), madeForKids (see below), privacy: "public", category, tags}`, `tiktokData.privacyOption = PUBLIC_TO_EVERYONE`.
 - **Always set the AI-content flags to true** (Ani's standing rule; his VO and art are AI): `instagramData.isAiGenerated`, `youtubeData.isAiGeneratedContent`, `tiktokData.isAigc`. They can't be edited after publishing.
 - "Post now": Metricool rejects past times, so schedule 5-8 minutes ahead of the current America/New_York time (note: DST ended Nov 1, offset is -05:00). Confirm with `getScheduledPosts` that each network reads `PUBLISHED` and report the `publicUrl`s.
 - Post text: hook line, what's inside, buy link, the A/B poll, hashtags. Do not claim anything the book doesn't contain.
 - Don't automate Instagram/TikTok cover edits afterward: not possible from the web or Metricool once published.
+- **One `createScheduledPost` per network** (not one post with all providers) so each gets its own caption, link treatment and hashtag set. Save all four captions first as a stamped `<name>-social-copy_<stamp>.md` next to the video.
+- `youtubeData`: set `category` (`HOWTO_STYLE` for recipes, `EDUCATION` for workbooks, `ENTERTAINMENT` for coloring/activity books) and 8-10 `tags` (topic, title, `logicmanse`, `shorts`). `madeForKids: true` only for children's titles (Leia); cook books and log books are `false`. Title ends with `#shorts`. On TikTok set `title` and `commercialContentOwnBrand: true` (we promote our own book).
+
+## 12. CTA site link: verify before every post
+The CTA must point to the title's own page on logicmanse.ca, never a guess.
+1. Find the slug from the live books index: `curl -sL https://www.logicmanse.ca/books/ | grep -oE 'href="/books/[^"]+"'`.
+2. Confirm the page returns 200 and its `<title>` names the book: `curl -s -o /dev/null -w '%{http_code}' <url>`. Pull the real facts (recipe/page counts, formats, Etsy/Amazon buttons) from the page text for the caption.
+3. Known pages: Leia `https://www.logicmanse.ca/books/leia-coloring-book/`; Family Table Favorites Vol. 1 `https://www.logicmanse.ca/books/family-table-favorites-vol1/` (72 recipes, 15 sections, 158 pages, Etsy PDF + Amazon paperback). Other book pages: `heart-health-log-book`, `renovation-repair-record-book`, `rental-property-record-book`. If a title has no page yet, stop and tell Ani instead of linking the home page.
+4. Link treatment: Facebook and YouTube get the full clickable `https://` URL. Instagram and TikTok captions don't make links clickable, so write `👉 Link in bio: logicmanse.ca/books/<slug>`. Put the same URL in the video's end card text when it fits.
+5. For a recipe video, name the recipe's page numbers in the book (from `book_data.json`), e.g. "Full recipe on pages 18-19".
+
+## 13. Hashtags
+- **Count**: 5 per post on every network (Instagram now caps at 5; 3-5 performs best on TikTok, Facebook and YouTube). Put them on the last line of the caption.
+- **Mix**: 1 dish or subject tag + 1 cuisine/region tag + 1 broad category tag + 1 product tag + 1 audience/format tag. Examples:
+  - Cook books: `#MasalaDosa #KeralaFood #SouthIndianFood #Cookbook #FamilyRecipes` (TikTok swaps the last for `#recipe`; YouTube swaps it for `#Shorts`).
+  - Leia/children's: `#ColoringBook #KidsActivities #DogLovers #ScreenFreeFun #KidsBooks`.
+  - Log books/planners: `#HealthTracker #LogBook #Planner #Organization #SelfCare` (adjust to the book).
+- CamelCase on Facebook/YouTube for readability; lowercase is fine on Instagram/TikTok.
+- No banned or spammy tags (`#follow4follow`, `#like4like`), no tag unrelated to the video, no brand tags of other companies.
+- End with an engagement prompt before the hashtags (an A/B choice tied to real next content, e.g. "Comment 🥥 for coconut chutney or 🍲 for chicken stew & appam", only naming recipes that are in the book).
+
+## 14. Cook book (FTF) cinematic recipe videos (proven on Masala Dosa, Nov 2026)
+- Source data: `Cook Book Digital Product\Family Table Favorites HQ\01_Volume_1\Layout\book_data.json` (ingredients, steps, pages); hero photo from `01_Volume_1\Source_Photos\reference_imagineart_pics\`. Project lives at `04_Marketing\Social_Media\<Recipe>_Test\hf-<recipe>\`.
+- **No real people's faces.** Ani rejected stock clips showing faces. Use faceless AI clips: vidIQ `vidiq_generate_video`, model `seedance-2-fast`, 720p, 9:16, 4s (120 credits each). Prompt pattern: "Cinematic vertical food film, macro close-up of <step>, warm golden window light, shallow depth of field, slow push-in. No people, no faces, no hands, no text." One clip per recipe step (soak, temper, masala, pour, fold, plated beauty shot); about 5-6 clips is ~600-720 credits, so state the total before submitting. Stretch a 4s clip to a 7s line with `data-playback-rate` (~0.56).
+- Narration: Indian-accented voice **Dhara `ZbxPfVOKktgkLqi5LCBx`** (eleven_v4, `[warm]` tag), ~75 words for ~30s. If the API generation reports `failed`, Ani can download the take from the ElevenLabs flow page (saved as `New tts node.mp3` in Downloads).
+- Music: cooking-style bed from `vidiq_generate_music` (25 credits), e.g. "warm cheerful cooking-show music, acoustic guitar and ukulele, hand percussion, bansuri flute, 100 bpm, instrumental", volume 0.22 under the VO.
+- Film look: warm soft-light gradient, vignette, animated SVG grain, 190px letterbox bars, slow push-in on every clip, word-timed captions. End card over the plated beauty shot: book name, recipe pages, then post with the section 12 link.
+- HyperFrames gotcha: never nest a timed `<video>` inside a timed wrapper (check error `video_nested_in_timed_element`); give the `<video>` itself `class="clip scene"` with `width/height:100%; object-fit:cover`.
