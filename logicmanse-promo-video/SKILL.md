@@ -47,10 +47,15 @@ Run these in order; each step is idempotent (skip if its output already exists).
 Every deliverable (final video, social copy, thumbnail, voiceover, cue sheets) gets a local-time stamp: `<name>_YYYY-MM-DD_HHMM.<ext>`. Use `scripts/stamp.py FILE...` (copies; originals stay, so existing Drive/Metricool links keep working). Never overwrite an earlier stamped file; a re-render gets a new stamp.
 
 ## 11. Metricool posting rules (brand `Logicmanse Publications`, blogId 7582300, timezone America/New_York)
-- Call `getBrandSettings` first for blogId and timezone. Networks: facebook, instagram, tiktok, youtube. Skip Pinterest unless an image and board are supplied.
+- Call `getBrandSettings` first for blogId and timezone. Networks: facebook, instagram, tiktok, youtube **and pinterest** (account `logicmanse`). Every promo goes to all five.
+- **Pinterest**: one video pin per post. `pinterestData = {boardId: "<exact board name>", pinTitle (<=100 chars, keyword-first, e.g. "Crispy Masala Dosa Recipe | Kerala Breakfast"), pinLink: <the verified book page URL from section 12>, isAiGenerated: true}`; set `videoThumbnailUrl` to the thumbnail Drive link. Caption = keyword-rich 2-3 sentences + the URL + 3-5 hashtags. Metricool resolves an exact board name to its id. Board by theme (live list: `curl -sL -A "Mozilla/5.0" https://ca.pinterest.com/logicmanse/ | grep -oE '"url":"/logicmanse/[^"]+/"' | sort -u`):
+  - Leia Books: `Leia the Superhero Dog` (also fits `Dog Coloring Pages`, `Printable Kids Activities`)
+  - Cook Books: `Kerala Family Recipes` (create it on Pinterest first if it's missing; Metricool can't create boards)
+  - Low Content Books: `Medical Log Printables`, `Heart Health & Caregiving`, `Landlord & Rental Printables`, `Property Management Printables` (pick by book)
+  If no board fits, stop and ask Ani to create one rather than pinning to an unrelated board.
 - `media` = the public Drive link (Metricool imports it). `videoThumbnailUrl` = the thumbnail's Drive link (Instagram/Facebook/YouTube; TikTok only on Business accounts).
 - `facebookData.type = REEL`, `instagramData.type = REEL`, `youtubeData` = `{type: "short", title (<100 chars), madeForKids (see below), privacy: "public", category, tags}`, `tiktokData.privacyOption = PUBLIC_TO_EVERYONE`.
-- **Always set the AI-content flags to true** (Ani's standing rule; his VO and art are AI): `instagramData.isAiGenerated`, `youtubeData.isAiGeneratedContent`, `tiktokData.isAigc`. They can't be edited after publishing.
+- **Always set the AI-content flags to true** (Ani's standing rule; his VO and art are AI): `instagramData.isAiGenerated`, `youtubeData.isAiGeneratedContent`, `tiktokData.isAigc`, `pinterestData.isAiGenerated`. They can't be edited after publishing.
 - "Post now": Metricool rejects past times, so schedule 5-8 minutes ahead of the current America/New_York time (note: DST ended Nov 1, offset is -05:00). Confirm with `getScheduledPosts` that each network reads `PUBLISHED` and report the `publicUrl`s.
 - Post text: hook line, what's inside, buy link, the A/B poll, hashtags. Do not claim anything the book doesn't contain.
 - Don't automate Instagram/TikTok cover edits afterward: not possible from the web or Metricool once published.
