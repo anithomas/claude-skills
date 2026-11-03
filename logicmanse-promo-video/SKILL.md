@@ -49,10 +49,14 @@ Every deliverable (final video, social copy, thumbnail, voiceover, cue sheets) g
 ## 11. Metricool posting rules (brand `Logicmanse Publications`, blogId 7582300, timezone America/New_York)
 - Call `getBrandSettings` first for blogId and timezone. Networks: facebook, instagram, tiktok, youtube **and pinterest** (account `logicmanse`). Every promo goes to all five.
 - **Pinterest**: one video pin per post. `pinterestData = {boardId: "<exact board name>", pinTitle (<=100 chars, keyword-first, e.g. "Crispy Masala Dosa Recipe | Kerala Breakfast"), pinLink: <the verified book page URL from section 12>, isAiGenerated: true}`; set `videoThumbnailUrl` to the thumbnail Drive link. Caption = keyword-rich 2-3 sentences + the URL + 3-5 hashtags. Metricool resolves an exact board name to its id. Board by theme (live list: `curl -sL -A "Mozilla/5.0" https://ca.pinterest.com/logicmanse/ | grep -oE '"url":"/logicmanse/[^"]+/"' | sort -u`):
-  - Leia Books: `Leia the Superhero Dog` (also fits `Dog Coloring Pages`, `Printable Kids Activities`)
-  - Cook Books: `Kerala Family Recipes` (create it on Pinterest first if it's missing; Metricool can't create boards)
-  - Low Content Books: `Medical Log Printables`, `Heart Health & Caregiving`, `Landlord & Rental Printables`, `Property Management Printables` (pick by book)
-  If no board fits, stop and ask Ani to create one rather than pinning to an unrelated board.
+  - Leia Coloring Book: `Leia the Superhero Dog` (also fits `Dog Coloring Pages`, `Printable Kids Activities`)
+  - Family Table Favorites (any volume): `Family Table Favorites - East/West Recipes`
+  - Mediterranean cook book: `Mediterranean Recipes`
+  - Heart Health Monitor Log: `Heart Health & Caregiving` (also `Medical Log Printables`)
+  - Rental Log: `Landlord & Rental Printables` (also `Property Management Printables`)
+  - Renovation Repair Log: `Home Renovation & Repair Printables`
+  - Kindergarten Education Workbook: `Kindergarten Learning Printables` (also `Printable Kids Activities`)
+  Never use the `Social` board for promos. There is no Pinterest connector and Metricool can't create boards: for a new title with no fitting board, create one in Claude in Chrome (ca.pinterest.com/logicmanse/_saved/ → Create → Board → name → Enter → Done), check the board URL returns 200, then add it to this list. Pinterest ignores `videoThumbnailUrl`, so leave it out of pin-only posts.
 - `media` = the public Drive link (Metricool imports it). `videoThumbnailUrl` = the thumbnail's Drive link (Instagram/Facebook/YouTube; TikTok only on Business accounts).
 - `facebookData.type = REEL`, `instagramData.type = REEL`, `youtubeData` = `{type: "short", title (<100 chars), madeForKids (see below), privacy: "public", category, tags}`, `tiktokData.privacyOption = PUBLIC_TO_EVERYONE`.
 - **Always set the AI-content flags to true** (Ani's standing rule; his VO and art are AI): `instagramData.isAiGenerated`, `youtubeData.isAiGeneratedContent`, `tiktokData.isAigc`, `pinterestData.isAiGenerated`. They can't be edited after publishing.
