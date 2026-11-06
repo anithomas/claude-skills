@@ -15,6 +15,8 @@ All user-level (general-purpose) skills live here, never in a project repo. Proj
 Keep this list in sync: every skill added, moved or removed here gets its README line updated in the same commit.
 
 General
+- `interview-me` — interviews you one question at a time about a fuzzy task, then writes one clear brief (from the Claude 15 tips kit).
+- `detox` — audits your Claude setup (interface, memory, skills, connectors, scheduled tasks) and shows one checklist page; changes only what you tick (from the Claude 15 tips kit).
 - `find-skills` — discover and install skills via the `npx skills` CLI (from vercel-labs/skills).
 
 Video: sound design
