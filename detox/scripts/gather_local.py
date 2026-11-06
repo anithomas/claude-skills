@@ -28,6 +28,9 @@ from pathlib import Path
 
 HOME = Path.home()
 APP = HOME / "Library/Application Support/Claude"
+_WIN = HOME / "AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc"
+if not APP.exists() and _WIN.exists():
+    APP = _WIN
 CODE_SESSIONS = APP / "claude-code-sessions"
 COWORK_SESSIONS = APP / "local-agent-mode-sessions"
 PROJECTS = HOME / ".claude/projects"
