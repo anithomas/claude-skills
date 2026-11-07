@@ -35,6 +35,7 @@ Video: HyperFrames (build and render videos as HTML compositions)
 - `general-video` — custom compositions when no specialized workflow fits: longer pieces, reels, montages, title cards.
 - `motion-graphics` — short design-led motion graphics: kinetic type, stat count-ups, data-viz, logo stings, lower-thirds.
 - `media-use` — resolve BGM, SFX, images, icons, logos, voice, color grades or LUTs into local files with a ledger.
+- `motion-graphics-styles` — eight ready-made prompts (Paper Cut-Out, Particles, Liquid Glass, Kinetic Type, Isometric, Flat Vector, Risograph, 8-Bit) that build a playable, MP4-exportable HTML animation from a topic.
 
 Video: LogicManse Publications
 - `logicmanse-promo-video` — build and publish a LogicManse Publications title's promo video end to end: cue sheets, HyperFrames render, ElevenLabs voiceover, timestamped files, thumbnail, Drive link, Metricool post to all networks with AI-content flags.
