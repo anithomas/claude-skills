@@ -39,3 +39,6 @@ Video: HyperFrames (build and render videos as HTML compositions)
 
 Video: LogicManse Publications
 - `logicmanse-promo-video` — build and publish a LogicManse Publications title's promo video end to end: cue sheets, HyperFrames render, ElevenLabs voiceover, timestamped files, thumbnail, Drive link, Metricool post to all networks with AI-content flags.
+
+Video: iterative build loop
+- `cook` — the Cook Loop (from github.com/Leonxlnx/cook, MIT): long autonomous build-render-critique runs that match reference images or videos against a numeric bar. Asks all questions once at intake, then works unattended and holds the final render until you approve the stills.
