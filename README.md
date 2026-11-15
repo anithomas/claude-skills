@@ -18,6 +18,7 @@ General
 - `interview-me` — interviews you one question at a time about a fuzzy task, then writes one clear brief (from the Claude 15 tips kit).
 - `detox` — audits your Claude setup (interface, memory, skills, connectors, scheduled tasks) and shows one checklist page; changes only what you tick (from the Claude 15 tips kit).
 - `find-skills` — discover and install skills via the `npx skills` CLI (from vercel-labs/skills).
+- `graphify` — turn a folder of code, docs, papers or images into a queryable knowledge graph (`/graphify .`). Needs the CLI: `uv tool install graphifyy` (PyPI name has two y's). Skill files from `graphify install --platform claude` (github.com/Graphify-Labs/graphify).
 
 Video: sound design
 - `video-sound-design-editor` — three-pass sound design (whooshes, textures, risers/hits) with level targets.
