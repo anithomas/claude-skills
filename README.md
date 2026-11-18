@@ -42,3 +42,6 @@ Video: LogicManse Publications
 
 Video: iterative build loop
 - `cook` — the Cook Loop (from github.com/Leonxlnx/cook, MIT): long autonomous build-render-critique runs that match reference images or videos against a numeric bar. Asks all questions once at intake, then works unattended and holds the final render until you approve the stills.
+
+Video: 2D animated long-form
+- `reachmora-2d-longform` — make 3, 5, 10 or 15 minute faceless 2D animated YouTube videos (ink-on-paper cartoon style): pitches 10 ideas, writes the script, then turns your voiceover into a finished 1080p MP4 with code-drawn characters, music and SFX. By ReachMora (keep the credit in `CREDITS.md`). Needs ffmpeg and `scripts/setup.sh` (pip packages plus a ~460 MB speech model from GitHub).
