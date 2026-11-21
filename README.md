@@ -47,5 +47,5 @@ Video: 2D animated long-form
 - `reachmora-2d-longform` — make 3, 5, 10 or 15 minute faceless 2D animated YouTube videos (ink-on-paper cartoon style): pitches 10 ideas, writes the script, then turns your voiceover into a finished 1080p MP4 with code-drawn characters, music and SFX. By ReachMora (keep the credit in `CREDITS.md`). Needs ffmpeg and `scripts/setup.sh` (pip packages plus a ~460 MB speech model from GitHub).
 
 Video: code-drawn animation (HTML + MP4 from the same code)
-- `animation` — story or explainer animated video: asks length, topic and style (default 30 s Storybook look), builds a self-contained HTML that plays with sound plus a deterministic frame-by-frame MP4, with a synthesized audio track and review rules.
+- `animation` — story or explainer animated video: asks length, topic and style (default 30 s Storybook look), builds a self-contained HTML that plays with sound plus a deterministic frame-by-frame MP4, with a synthesized audio track and review rules. Optional voiceover (your recording or ElevenLabs) mixed in with the music ducked under it.
 - `cinematic` — short Ghibli-style / classic Japanese feature-animation sequence: tapered ink lines, cel shading, painted watercolor/gouache backgrounds; same HTML + MP4 + synth audio pipeline, with art-direction and final polish checks.
