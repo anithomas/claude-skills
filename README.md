@@ -45,6 +45,7 @@ Video: iterative build loop
 
 Video: 2D animated long-form
 - `reachmora-2d-longform` — make 3, 5, 10 or 15 minute faceless 2D animated YouTube videos (ink-on-paper cartoon style): pitches 10 ideas, writes the script, then turns your voiceover into a finished 1080p MP4 with code-drawn characters, music and SFX. By ReachMora (keep the credit in `CREDITS.md`). Needs ffmpeg and `scripts/setup.sh` (pip packages plus a ~460 MB speech model from GitHub).
+- `voicestudio` — drive a running VoiceStudio backend (github.com/debpalash/VoiceStudio v0.5.8, AGPL-3.0, `LICENSE` included): local text-to-speech with saved or designed voices, transcription, dubbing and narration via its REST API or MCP server at `localhost:3900`. Needs the VoiceStudio app/backend running; the skill never downloads models or switches to a hosted provider without your say-so. (The project's `voicestudio-maintainer` skill is for contributing to its code and was not added.)
 
 Video: code-drawn animation (HTML + MP4 from the same code)
 - `animation` — story or explainer animated video: asks length, topic and style (default 30 s Storybook look), builds a self-contained HTML that plays with sound plus a deterministic frame-by-frame MP4, with a synthesized audio track and review rules. Optional voiceover (your recording or ElevenLabs) mixed in with the music ducked under it.
